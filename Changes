@@ -1,5 +1,14 @@
 Revision history for Perl extension Acme::Pr0n.
 
+0.03  Sat Aug  3 18:25:13 UTC 2002
+	- fixed the POD (thanks to J. Waalboer (jwaalboer@convolution.nl))
+	- added t/sigils.t
+	- handle sigils correctly
+	- check $VERSION of victim modules
+	- export more than just coderefs
+	- handle empty @EXPORT and @EXPORT_OK more gracefully
+	- added BUGS, which doesn't really have any bugs
+
 0.02  Sat Jul 27 01:11:47 PDT 2002
 	- fixed the spelling of Joel's name.  Oops.
 	- gave DJ Adams some credit.  Yay.

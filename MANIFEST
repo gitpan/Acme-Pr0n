@@ -4,3 +4,4 @@ MANIFEST
 lib/Acme/Pr0n.pm
 README
 t/base.t
+t/sigils.t
