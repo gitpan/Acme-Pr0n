@@ -3,7 +3,7 @@ package Acme::Pr0n;
 use strict;
 
 use vars qw( $VERSION );
-$VERSION = '0.01';
+$VERSION = '0.02';
 
 sub import {
 	my $caller  = caller();
@@ -14,7 +14,7 @@ sub import {
 		(my $path = $victim) =~ s[::][/]g;
 		unless (exists $INC{ $path . '.pm' }) {
 			require Carp;
-			Carp::croak "Some pervert is looking at unloaded module $victim!";
+			Carp::croak("Some pervert is looking at unloaded module $victim!");
 		}
 		my $glob = *{ "main::${victim}::" };
 		my %skip;
@@ -62,6 +62,8 @@ probably go blind if you do that.
 
 =over 4
 
+=item * Respect sigils in @EXPORT and @EXPORT_OK
+
 =item * Handle variables.
 
 =item * Expose SOURCE CODE, you fiend.
@@ -71,10 +73,13 @@ probably go blind if you do that.
 =head1 AUTHOR
 
 chromatic E<lt>chromatic@wgz.orgE<gt>, with substantial thematic help from
-Michael G Schwern, Mark-Jason Dominus, Joel Nobel, and Norm Nunley.  Yikes.
+Michael G Schwern, Mark-Jason Dominus, Joel Noble, and Norm Nunley.  Yikes.
 You really had to be there.
 
 Dave Cross suggested looking in %INC.  Go, Dave.
+
+DJ Adams let me upload the initial version in the hallway at OSCON 2002 from
+his laptop.  Now he's tainted too!
 
 =head1 SEE ALSO
 
