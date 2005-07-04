@@ -1,5 +1,11 @@
 Revision history for Perl extension Acme::Pr0n.
 
+0.04 Mon Jul  4 19:10:10 UTC 2005
+	- bumped up revision number
+	- migrated to Module::Build
+	- added signature and test
+	- added POD tests
+
 0.03  Sat Aug  3 18:25:13 UTC 2002
 	- fixed the POD (thanks to J. Waalboer (jwaalboer@convolution.nl))
 	- added t/sigils.t

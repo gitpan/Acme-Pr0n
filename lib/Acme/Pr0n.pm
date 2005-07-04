@@ -1,53 +1,59 @@
 package Acme::Pr0n;
 
 use strict;
+use vars '$VERSION';
 
-use vars qw( $VERSION );
-$VERSION = '0.03';
+$VERSION = '0.04';
 
-sub import {
-	my $caller  = caller();
+sub import
+{
+	my $caller = caller();
 
 	no strict 'refs';
 
-	foreach my $victim (@_) {
-		(my $path = $victim) =~ s[::][/]g;
-		unless (exists $INC{ $path . '.pm' }) {
+	for my $victim (@_)
+	{
+		( my $path = $victim ) =~ s[::][/]g;
+		unless ( exists $INC{ $path . '.pm' } )
+		{
 			require Carp;
 			Carp::croak("Some pervert is looking at unloaded module $victim!");
 		}
-		my $glob = *{ "main::${victim}::" };
+		my $glob = *{"main::${victim}::"};
 
-		unless (exists $glob->{ VERSION } and
-				${ *{ $glob->{VERSION} }{SCALAR} } >= 0.18) {
+		unless ( exists $glob->{VERSION}
+			and ${ *{ $glob->{VERSION} }{SCALAR} } >= 0.18 )
+		{
 			require Carp;
 			Carp::carp( "Module '$victim' too young!" );
 		}
 
-		my @exportlists = grep { exists $glob->{ $_ } } qw( EXPORT EXPORT_OK );
+		my @exportlists = grep { exists $glob->{$_} } qw( EXPORT EXPORT_OK );
 
 		my %skip;
-		@skip{
-			map { @{ *{ $glob->{ $_ } }{ARRAY} } } @exportlists 
-		} = ();
+		@skip{ map { @{ *{ $glob->{$_} }{ARRAY} } } @exportlists } = ();
 
-		foreach my $symbol ( keys %$glob ) {
-			foreach my $slots (
-				[ 'CODE', '&', '' ],
+		for my $symbol ( keys %$glob )
+		{
+			for my $slots (
+				[ 'CODE',   '&', '' ],
 				[ 'SCALAR', '$' ],
-				[ 'ARRAY', '@' ],
-				[ 'HASH', '%' ],
-				[ 'IO', '*' ],
-			) {
-				my $slot = shift @$slots;
+				[ 'ARRAY',  '@' ],
+				[ 'HASH',   '%' ],
+				[ 'IO',     '*' ],
+				)
+			{
+				my $slot      = shift @$slots;
 				my $skip_slot = 0;
-				while (@$slots) {
+				while (@$slots)
+				{
 					$skip_slot = 1, last
-						if exists $skip{ shift( @$slots ) . $symbol };
+						if exists $skip{ shift(@$slots) . $symbol };
 				}
 				next if $skip_slot;
 
-				if (defined (my $ref = *{ $glob->{ $symbol } }{$slot})) {
+				if ( defined( my $ref = *{ $glob->{$symbol} }{$slot} ) )
+				{
 					*{ $caller . "::$symbol" } = $ref;
 				}
 			}
@@ -79,7 +85,7 @@ functions anyway.  Where's the fun in that?
 Please note that you must have loaded the module you want to leer at -- it's a
 little like consent.  The victim module must also have a version greater than
 0.18.  If there's no version, Acme::Pr0n won't bother guessing.  It will
-carp(), so be ready for that.
+C<carp()>, so be ready for that.
 
 =head2 EXPORT
 
@@ -98,22 +104,22 @@ probably go blind if you do that.  It's also under the age of consent.
 
 =head1 BUGS
 
-Modules with custom import()s are more or less immune.  The author considers
+Modules with custom C<import()>s are more or less immune.  The author considers
 this to be a feature, at least until he writes Glob::Util.  It's a surprisingly
 tricky problem.
 
 =head1 AUTHOR
 
-chromatic E<lt>chromatic@wgz.orgE<gt>, with substantial thematic help from
-Michael G Schwern, Mark-Jason Dominus, Joel Noble, and Norm Nunley.  Yikes.
-You really had to be there.
+chromatic (C<< chromatic at wgz dot org >>), with substantial thematic help
+from Michael G Schwern, Mark-Jason Dominus, Joel Noble, and Norm Nunley.
+Yikes.  You really had to be there.
 
 Dave Cross suggested looking in %INC.  Go, Dave.
 
 DJ Adams let me upload the initial version in the hallway at OSCON 2002 from
 his laptop.  Now he's tainted too!
 
-J. Waalboer E<lt>jwaalboer@convolution.nlE<gt> suggested some POD fixes.
+Juerd (C<< jwaalboer at convolution dot nl >>) suggested some POD fixes.
 Thanks!
 
 =head1 SEE ALSO

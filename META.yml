@@ -1,0 +1,14 @@
+---
+name: Acme-Pr0n
+version: 0.04
+author:
+  - chromatic <chromatic@wgz.org>
+abstract: expose the naughty bits of modules to the world
+license: perl
+build_requires:
+  Test::Simple: 0.45
+provides:
+  Acme::Pr0n:
+    file: lib/Acme/Pr0n.pm
+    version: 0.04
+generated_by: Module::Build version 0.2611

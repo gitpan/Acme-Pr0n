@@ -1,7 +1,13 @@
 Changes
+Build.PL
 Makefile.PL
 MANIFEST
+META.yml
 lib/Acme/Pr0n.pm
 README
+t/0-signature.t
 t/base.t
+t/pod.t
+t/pod-coverage.t
 t/sigils.t
+SIGNATURE    Added here by Module::Build
